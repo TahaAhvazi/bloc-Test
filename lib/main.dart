@@ -1,4 +1,9 @@
+import 'package:flbc/counter_bloc.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'counterpage.dart';
 
 // Stream<int> countStream(int max) async* {
 //   for (var i = 0; i < max; i++) {
@@ -41,36 +46,51 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 //   }
 // }
 
-abstract class CounterEvent {}
+// abstract class CounterEvent {}
 
-class CounterIncrementPressed extends CounterEvent {}
+// class CounterIncrementPressed extends CounterEvent {}
 
-class CounterBloc extends Bloc<CounterEvent, int> {
-  EventTransformer<T> debounce<T>(Duration duration) {
-    return (events, mapper) => events.debounceTime(duration).flatMap(mapper);
-  }
+// class CounterBloc extends Bloc<CounterEvent, int> {
+//   EventTransformer<T> debounce<T>(Duration duration) {
+//     return (events, mapper) => events.debounceTime(duration).flatMap(mapper);
+//   }
 
-  CounterBloc() : super(0) {
-    on<CounterIncrementPressed>((event, emit) {
-      emit(state + 1);
-    });
-  }
+//   CounterBloc() : super(0) {
+//     on<CounterIncrementPressed>((event, emit) {
+//       emit(state + 1);
+//     });
+//   }
+//   @override
+//   void onChange(Change<int> change) {
+//     // TODO: implement onChange
+//     super.onChange(change);
+//     print(change);
+//   }
+
+//   @override
+//   void onTransition(Transition<CounterEvent, int> transition) {
+//     // TODO: implement onTransition
+//     super.onTransition(transition);
+//     print(transition);
+//   }
+// }
+
+void main() => runApp(CounterApp());
+
+class CounterApp extends StatelessWidget {
+  const CounterApp({Key? key}) : super(key: key);
+
   @override
-  void onChange(Change<int> change) {
-    // TODO: implement onChange
-    super.onChange(change);
-    print(change);
-  }
-
-  @override
-  void onTransition(Transition<CounterEvent, int> transition) {
-    // TODO: implement onTransition
-    super.onTransition(transition);
-    print(transition);
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: BlocProvider(
+        create: (_) => CoounterBloc(),
+        child: const CounterPage(),
+      ),
+    );
   }
 }
 
-void main() {
   // final cubit = CounterCubit();
   // final subscription = cubit.stream.listen(print);
   // cubit.increment();
@@ -97,7 +117,7 @@ void main() {
   // await subscription.cancel();
   // bloc.close();
 
-  CounterBloc()
-    ..add(CounterIncrementPressed())
-    ..close();
-}
+  // CounterBloc()
+  //   ..add(CounterIncrementPressed())
+  //   ..close();
+
